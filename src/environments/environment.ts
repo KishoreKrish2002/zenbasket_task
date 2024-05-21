@@ -1,3 +1,3 @@
 export const environment = {
-  "url": "http://local.getzenbasket.com:5500"
+  "url": "http://localhost:5500"
 };

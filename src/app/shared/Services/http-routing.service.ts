@@ -17,7 +17,8 @@ export class HttpRoutingService {
 
   getMethod(url: any) {
     console.log(this.url + '/v1' + url);
-    return this.httpService.get('http://local.getzenbasket.com:5000/v1/product/2');
+
+    return this.httpService.get(this.url + '/v1' + url);
 
   }
 
