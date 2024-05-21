@@ -2,6 +2,7 @@ const product = require('./../models').product;
 
 const createProduct = async function (req, res) {
   let err, details;
+  console.log("req.....................:", req);
   [err, details] = await to(product.create(req?.body));
   if (err) return ReE(res, { Error: err.message }, 422);
   return ReS(res, { productDetails: details }, 200);

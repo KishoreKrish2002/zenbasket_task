@@ -8,7 +8,6 @@ import { HttpRoutingService } from 'src/app/shared/Services/http-routing.service
 })
 export class ProductListComponent {
   constructor(private httpService: HttpRoutingService) { }
-
   ngOnInit() {
     this.httpService.getMethod('/product').subscribe((data) => {
       console.log(data);
