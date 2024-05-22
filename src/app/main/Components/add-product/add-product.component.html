@@ -1,0 +1,39 @@
+<div class="form-container" fxFlex="100%" fxLayoutAlign="center center" fxLayout="column">
+  <form [formGroup]="myGroup" class="full-width" fxLayoutAlign="center center" fxLayout="column">
+    <!-- <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Product Id</mat-label>
+        <input formControlName="id" type="number" matInput placeholder="Placeholder">
+      </mat-form-field>
+    </div> -->
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Product Name</mat-label>
+        <input formControlName="name" matInput placeholder="Placeholder">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input formControlName="description" matInput placeholder="Placeholder">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Price</mat-label>
+        <input formControlName="price" type="number" matInput placeholder="Placeholder">
+      </mat-form-field>
+    </div>
+  </form>
+  <div class="button-container full-width" fxLayoutAlign="center center" fxLayoutGap="5%">
+    <div class="cancel-button">
+      <button mat-raised-button color="primary">Cancel</button>
+    </div>
+    <div class="reset-button">
+      <button mat-raised-button color="primary">Reset</button>
+    </div>
+    <div class="submit-button">
+      <button mat-raised-button color="primary" (click)="onSubmit()">{{isUpdateScenario ? 'Submit' : 'Update'}}</button>
+    </div>
+  </div>
+</div>

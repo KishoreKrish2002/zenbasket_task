@@ -12,14 +12,25 @@ export class HttpRoutingService {
   message !: any;
 
   postMethod(url: any, data: any) {
-    return this.httpService.post(this.url + '/v1' + url, data)
+    console.log(this.url + '/v1' + url, data);
+    return this.httpService.post(this.url + '/v1' + url, data);
   }
 
   getMethod(url: any) {
     console.log(this.url + '/v1' + url);
-
     return this.httpService.get(this.url + '/v1' + url);
+  }
 
+  putMethod(url: any, data: any, queryParam: any) {
+    console.log(this.url + '/v1' + url, data, queryParam);
+
+    return this.httpService.put(this.url + '/v1' + url, data, {
+      params: queryParam,
+    })
+  }
+
+  deleteMethod(url: any) {
+    return this.httpService.delete(this.url + '/v1' + url)
   }
 
 }

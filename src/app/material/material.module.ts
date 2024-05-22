@@ -95,6 +95,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RouterModule,
     BrowserAnimationsModule,
     FlexModule,
+    RouterModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -139,6 +140,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RouterModule,
     BrowserAnimationsModule,
     FlexModule,
+    RouterModule
   ]
 })
 export class MaterialModule { }
