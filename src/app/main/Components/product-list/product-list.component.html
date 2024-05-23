@@ -1,4 +1,4 @@
-<div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
+<!-- <div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
   <button mat-icon-button color="primary" routerLink="/add-product"><mat-icon>add_circle</mat-icon></button>
   <div class="product-list-container full-width" fxLayout="column" fxLayoutAlign="center center">
     <mat-card class="product-list-box" fxLayoutAlign="space-between center" *ngFor="let product of productListData">
@@ -12,4 +12,78 @@
       </mat-card-actions>
     </mat-card>
   </div>
+</div> -->
+
+<div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center" fxLayoutGap="5%">
+  <div class="header-container full-width" fxLayoutAlign="center center">
+    <div class="title" fxFlex="80%" fxLayoutAlign="start center" fxLayotuGap="5%">
+      <mat-icon fxLayoutAlign="center center">av_timer</mat-icon>
+      <p fxLayoutAlign="center center">All Proudcts</p>
+    </div>
+    <div class="add-product-button">
+      <!-- <button mat-raised-button color="primary"> <mat-icon >add_circle</mat-icon> Add Product</button> -->
+      <button mat-fab extended color="primary" routerLink="add-product">
+        <mat-icon>add_circle</mat-icon>
+        Add Product
+      </button>
+    </div>
+  </div>
+  <div class="product-list-container full-width" fxLayout="row wrap" fxLayoutAlign="center center">
+    <div class="card-box" *ngFor="let product of productListData">
+      <div class="container">
+        <div class="product-image-container"></div>
+        <div class="product-detail-container">
+          <div class="detail-sec">
+            <div class="details">
+              <h1>{{product.name}}</h1>
+              <p>{{product.price}}</p>
+            </div>
+            <div class="buy"><i class="material-icons">add_shopping_cart</i></div>
+          </div>
+          <!-- <div class="cart-sec">
+            <div class="details">
+              <h1>Chair</h1>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="info-container" fxLayoutAlign="end center">
+        <div class="full-width" fxLayout="column" fxLayoutAlign="space-around center">
+          <button mat-icon-button color="accent" routerLink="add-product">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" routerLink="add-product">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" routerLink="add-product">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div class="info-icon"><i class="material-icons">info_outline</i></div>
+        <div class="contents" fxFlex="100%" fxLayoutAlign="center start">
+          <div class="description" fxFlex="100%" fxLayoutAlign="center center">
+            <div class="action-container" fxLayout="column" fxFlex="100%" fxLayoutAlign="center start">
+              <!-- <div class="full-width" fxLayoutAlign="space-around center">
+                <button mat-fab extended color="accent" routerLink="add-product">
+                  <mat-icon>visibility</mat-icon>
+                  View
+                </button>
+                <button mat-fab extended color="primary" routerLink="add-product">
+                  <mat-icon>edit</mat-icon>
+                  Edit
+                </button>
+                <button mat-fab extended color="warn" routerLink="add-product">
+                  <mat-icon>delete</mat-icon>
+                  Delete
+                </button>
+              </div> -->
+              <!-- <div class="full-width" fxLayoutAlign="center center">
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>

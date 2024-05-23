@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/shared/Services/product.service';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent {
+  
   subscriptionObj = new Subscription();
   productListData!: Array<Rows>;
   constructor(
@@ -19,6 +20,7 @@ export class ProductListComponent {
     private router: Router
   ) { }
   ngOnInit() {
+    
     this.getAllProducts();
   }
 
