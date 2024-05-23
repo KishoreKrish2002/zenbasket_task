@@ -26,14 +26,15 @@
     </div>
   </form>
   <div class="button-container full-width" fxLayoutAlign="center center" fxLayoutGap="5%">
-    <div class="cancel-button">
-      <button mat-raised-button color="primary">Cancel</button>
+    <div class="back-button">
+      <button mat-raised-button color="primary" routerLink="/">Back</button>
     </div>
     <div class="reset-button">
       <button mat-raised-button color="primary">Reset</button>
     </div>
     <div class="submit-button">
-      <button mat-raised-button color="primary" (click)="onSubmit()">{{isUpdateScenario ? 'Submit' : 'Update'}}</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">{{!isUpdateScenario ? 'Submit' :
+        'Update'}}</button>
     </div>
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, mergeMap, of } from 'rxjs';
+import { AllProducts, DeleteRes, Rows } from 'src/app/models/models.module';
+import { CommonDialogService } from 'src/app/shared/Services/common-dialog.service';
 import { ProductService } from 'src/app/shared/Services/product.service';
 
 @Component({
@@ -10,33 +12,49 @@ import { ProductService } from 'src/app/shared/Services/product.service';
 })
 export class ProductListComponent {
   subscriptionObj = new Subscription();
-  productListData: any;
+  productListData!: Array<Rows>;
   constructor(
     private productService: ProductService,
+    private dialogService: CommonDialogService,
     private router: Router
   ) { }
   ngOnInit() {
+    this.getAllProducts();
+  }
+
+  onEditProduct(id: number) {
+    this.router.navigate(['add-product', id]);
+  }
+
+  onDeleteProduct(id: number) {
+    const dialogRef = this.dialogService.openDialog('Are you sure you want to delete!');
+
+    dialogRef.afterClosed().subscribe((res: any) => {
+      console.log(res);
+
+    })
+    // this.subscriptionObj.add(
+    //   this.dialogService.dialogReturn$.subscribe((res: boolean) => {
+    //     console.log("dialgo returns: ", res);
+    //     if (res) {
+    //       this.productService.deleteProduct(id).subscribe((res: DeleteRes) => {
+    //         if (res.success) {
+    //           this.getAllProducts();
+    //         }
+    //       })
+    //     }
+    //   })
+    // )
+  }
+
+  getAllProducts() {
     this.subscriptionObj.add(
-      this.productService.getAllProduct().subscribe((data: any) => {
-        console.log(data);
-        if (data && data.productList && data.productList.rows) {
+      this.productService.getAllProduct().subscribe((data: AllProducts) => {
+        if (data && data.productList && data.productList.rows && data.productList.rows.length) {
           this.productListData = data.productList.rows;
         }
       })
     )
-  }
-
-  onEditProduct(id: any) {
-    this.router.navigate(['add-product', id]);
-  }
-
-  onDeleteProduct(id: any) {
-    this.productService.deleteProduct(id).subscribe((res: any) => {
-      console.log("delete res: ", res);
-      this.productListData = this.productListData.filter((data: any) => { return data.id !== id });
-      console.log("log after del: ", this.productListData);
-
-    })
   }
 
   ngOnDestroy() {

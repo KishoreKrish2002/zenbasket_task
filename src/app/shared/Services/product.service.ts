@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRoutingService } from './http-routing.service';
+import { Observable } from 'rxjs';
+import { AllProducts, DeleteRes, OneProduct, Rows, createCallData, updateProduct } from 'src/app/models/models.module';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +12,24 @@ export class ProductService {
     private httpService: HttpRoutingService
   ) { }
 
-  createProduct(data: any) {
-    return this.httpService.postMethod('/product', data)
+  createProduct(data: createCallData): Observable<OneProduct> {
+    return this.httpService.postMethod('/product', data) as Observable<OneProduct>;
   }
 
-  getAllProduct() {
-    return this.httpService.getMethod('/product');
+  getAllProduct(): Observable<AllProducts> {
+    return this.httpService.getMethod('/product') as Observable<AllProducts>;
   }
 
-  getOneProduct(id: any) {
-    return this.httpService.getMethod(`/product/${id}`);
+  getOneProduct(id: number): Observable<OneProduct> {
+    return this.httpService.getMethod(`/product/${id}`) as Observable<OneProduct>;
   }
 
-  updateProduct(id: any, data: any) {
-    return this.httpService.putMethod(`/product`, data, { id: id });
+  updateProduct(id: number, data: createCallData): Observable<updateProduct> {
+    return this.httpService.putMethod(`/product`, data, { id: id }) as Observable<updateProduct>;
   }
 
-  deleteProduct(id: any) {
-    return this.httpService.deleteMethod(`/product/${id}`);
+  deleteProduct(id: number): Observable<DeleteRes> {
+    return this.httpService.deleteMethod(`/product/${id}`) as Observable<DeleteRes>;
   }
 
 }

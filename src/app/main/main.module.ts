@@ -4,6 +4,7 @@ import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { ProductListComponent } from './Components/product-list/product-list.component';
 import { AddProductComponent } from './Components/add-product/add-product.component';
+import { ConstantModule } from '../constant/constant.module';
 
 
 
@@ -15,7 +16,8 @@ import { AddProductComponent } from './Components/add-product/add-product.compon
   imports: [
     CommonModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    ConstantModule
   ],
   exports: [
     ProductListComponent

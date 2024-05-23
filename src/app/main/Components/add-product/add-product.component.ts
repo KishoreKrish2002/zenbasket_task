@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { HttpRoutingService } from 'src/app/shared/Services/http-routing.service';
+import { OneProduct, Rows, updateProduct } from 'src/app/models/models.module';
 import { ProductService } from 'src/app/shared/Services/product.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { ProductService } from 'src/app/shared/Services/product.service';
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent {
-  myGroup!: any;
-  productDetails!: any;
+  myGroup!: FormGroup;
+  productDetails!: Rows;
   paramDatas!: any;
   subscriptonObj = new Subscription();
   isUpdateScenario!: boolean;
@@ -23,28 +23,28 @@ export class AddProductComponent {
   ngOnInit() {
     this.paramDatas = {};
     this.isUpdateScenario = false;
-    console.log("outside a pram");
     if (this.route && this.route.params) {
-      console.log("inside a pram", this.route.params);
-      this.isUpdateScenario = true;
       this.subscriptonObj.add(
         this.route.params.subscribe((res: any) => {
-
           this.paramDatas.id = res.id;
           this.productService.getOneProduct(res.id)
-            .subscribe((res: any) => {
+            .subscribe((res: OneProduct) => {
               this.productDetails = res.productDetails;
               this.formInitilizer();
             })
         })
       );
     }
-    console.log("product details on edit: ", this.productDetails);
 
     this.formInitilizer();
   }
 
   formInitilizer() {
+    if (!this.productDetails) {
+      this.isUpdateScenario = false;
+    } else {
+      this.isUpdateScenario = true;
+    }
     this.myGroup = new FormGroup({
       name: new FormControl(this.productDetails && this.productDetails.name ? this.productDetails.name : null),
       description: new FormControl(this.productDetails && this.productDetails.description ? this.productDetails.description : null),
@@ -53,23 +53,17 @@ export class AddProductComponent {
   }
 
   onSubmit() {
-    console.log(this.myGroup.value);
     if (this.myGroup.valid) {
       if (this.myGroup && this.myGroup.value) {
-        console.log(this.isUpdateScenario);
 
         if (!this.isUpdateScenario) {
-          console.log("create");
-
-          this.productService.createProduct(this.myGroup.value).subscribe((res: any) => {
-            console.log("add response: ", res);
+          this.productService.createProduct(this.myGroup.value).subscribe((res: OneProduct) => {
+            if (res) this.myGroup.reset();
           });
         } else {
-          console.log("update", this.productDetails.id, this.myGroup.value);
 
-          this.productService.updateProduct(this.productDetails.id, this.myGroup.value).subscribe((res) => {
-            console.log(res);
-
+          this.productService.updateProduct(this.productDetails.id, this.myGroup.value).subscribe((res: updateProduct) => {
+            if (res) this.myGroup.reset();
           })
         }
       }
@@ -78,5 +72,9 @@ export class AddProductComponent {
 
   ngOnDestroy() {
     this.subscriptonObj.unsubscribe();
+  }
+
+  onDeactivate() {
+    return this.myGroup ? !this.myGroup.dirty : true;
   }
 }
