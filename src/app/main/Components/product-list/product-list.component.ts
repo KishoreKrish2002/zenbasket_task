@@ -29,9 +29,12 @@ export class ProductListComponent {
   onDeleteProduct(id: number) {
     const dialogRef = this.dialogService.openDialog('Are you sure you want to delete!');
 
-    dialogRef.afterClosed().subscribe((res: any) => {
-      console.log(res);
-
+    dialogRef.afterClosed().mergeMap((res: any) => {
+      if (res) {
+        return this.productService.deleteProduct(id);
+      } else {
+        return of(null)
+      }
     })
     // this.subscriptionObj.add(
     //   this.dialogService.dialogReturn$.subscribe((res: boolean) => {
