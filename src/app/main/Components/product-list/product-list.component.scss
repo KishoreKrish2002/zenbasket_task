@@ -95,7 +95,7 @@ html, body{
   
   .info-container{
     z-index:9;
-    background-color: #6f1757;
+    background-color: #0000006e;
     // clip-path: circle(16% at 100% 0);
     clip-path: polygon(80% 0, 100% 0, 100% 15%, 80% 8%);
     width:100%;
@@ -103,7 +103,7 @@ html, body{
     position: absolute;
     top: 0;
     right: 0;
-    transition: all 0.5s, border-radius 2s, top 1s;
+    transition: all 0.5s ease;
     overflow: visible;
     .info-icon{
       position:absolute;
@@ -112,34 +112,20 @@ html, body{
       color:white;
       opacity: 1;
     }
+    .info-buttons{
+      opacity: 0;
+    }
     &:hover{
-      clip-path: polygon(80% 0, 100% 0, 100% 90%, 80% 70%);
-                  right:0;
-      top:0;
-      border-radius: 0;
+      clip-path: polygon(80% 0, 100% 0, 100% 70%, 80% 55%);
       height:50%;
       .info-icon{
-        opacity: 0;
-        right:15px;
-        top:15px;
+        display: none;
       }
-      .contents{
-        opacity: 1;
-        transform: scale(1);
-        transform: translateY(0);
-      }
-    }
-    .contents{
-      padding: 5%;
-      opacity: 0;
-      transform: scale(0.5);
-      transform: translateY(-200%);
-      transition: opacity 0.2s, transform 0.8s;
-      h1, p, table{
-        color: white;
-      }
-      p{
-        font-size:18px;
+      .info-buttons{
+        opacity: 1; 
+        button{
+          color: #fff;
+        }
       }
     }
   }
