@@ -7,19 +7,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent {
-
+  /**
+   * 
+   * @param data - data that arrives for a service that show on the dialog
+   */
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: string
   ) { }
-
-  ngOnInit() {
-
-    console.log("data on dialog: ", this.data);
-  }
-
-  afterClosed() {
-    console.log("afterclosed");
-
-  }
 
 }

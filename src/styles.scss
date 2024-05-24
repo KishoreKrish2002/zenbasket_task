@@ -13,3 +13,26 @@ body {
 .full-width {
   width: 100%;
 }
+
+.search-box {
+
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label,
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
+    color: #6f1757 !important;
+  }
+
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color: #6f1757 !important;
+  }
+
+  mat-icon,
+  mat-icon.mat-primary,
+  mat-icon.mat-accent,
+  mat-icon.mat-warn {
+    color: #6f1757 !important;
+  }
+}
+
+.add-product-button mat-icon {
+  overflow: visible !important;
+}

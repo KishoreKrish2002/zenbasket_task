@@ -7,23 +7,15 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonDialogService {
-
+  /**
+   * 
+   * @param dialog - Dialog service to show dialog box
+   */
   constructor(public dialog: MatDialog) { }
-  public dialogReturn$ = new BehaviorSubject<any>(null);
-
   openDialog(message: string): any {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: message
     });
-
     return dialogRef;
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    //   if (result) {
-    //     this.dialogReturn$.next(true);
-
-    //   }
-    // });
   }
 }

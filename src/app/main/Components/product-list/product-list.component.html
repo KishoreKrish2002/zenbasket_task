@@ -1,62 +1,65 @@
-<!-- <div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
-  <button mat-icon-button color="primary" routerLink="/add-product"><mat-icon>add_circle</mat-icon></button>
-  <div class="product-list-container full-width" fxLayout="column" fxLayoutAlign="center center">
-    <mat-card class="product-list-box" fxLayoutAlign="space-between center" *ngFor="let product of productListData">
-      <mat-card-header>
-        <mat-card-title>{{product.name}}</mat-card-title>
-        <mat-card-subtitle>{{product.description}}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-actions fxLayoutGap="5%">
-        <button mat-raised-button color="primary" (click)="onEditProduct(product.id)">Edit</button>
-        <button mat-raised-button color="warn" (click)="onDeleteProduct(product.id)">Delete</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</div> -->
-
-<div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center" fxLayoutGap="5%">
-  <div class="header-container full-width" fxLayoutAlign="center center">
+<div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
+  <div class="header-container" fxLayoutAlign="center baseline" fxLayout.lt-md="column" fxLayoutGap.lt-md="5%">
     <div class="title" fxFlex="80%" fxLayoutAlign="start center" fxLayotuGap="5%">
       <mat-icon fxLayoutAlign="center center">av_timer</mat-icon>
       <p fxLayoutAlign="center center">All Proudcts</p>
     </div>
-    <div class="add-product-button">
-      <!-- <button mat-raised-button color="primary"> <mat-icon >add_circle</mat-icon> Add Product</button> -->
-      <button mat-fab extended color="primary" routerLink="add-product">
-        <mat-icon>add_circle</mat-icon>
-        Add Product
-      </button>
+    <div class="spacer" [ngStyle.lt-md]="{'display':'none'}"></div>
+    <div fxFlex="36%" fxLayoutAlign="center baseline" fxLayoutGap="5%" ngClass.lt-md="full-width"
+      fxLayoutAlign.lt-md="space-between baseline">
+      <div class=" search-box">
+        <mat-form-field appearance="fill">
+          <mat-label>Search Box</mat-label>
+          <input [formControl]="serachText" matInput placeholder="Search Product Name">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="add-product-button">
+        <button mat-fab extended color="primary" routerLink="add-product">
+          <mat-icon>add_circle</mat-icon>
+          Add Product
+        </button>
+      </div>
     </div>
   </div>
   <div class="product-list-container full-width" fxLayout="row wrap" fxLayoutAlign="center center">
-    <div class="card-box" *ngFor="let product of productListData">
-      <div class="container">
-        <div class="product-image-container"></div>
-        <div class="product-detail-container">
-          <div class="detail-sec">
-            <div class="details">
-              <h1>{{product.name}}</h1>
-              <p>{{product.price}}</p>
+    <ng-container *ngIf="productListData && productListData?.length">
+      <!-- appProductStyle - custom directive used for hover effect -->
+      <div class="card-box" appProductStyle *ngFor="let product of productListData" ngClass.lt-sm="hover-element">
+        <div class="container">
+          <div class="product-image-container"></div>
+          <div class="product-detail-container">
+            <div class="detail-sec" fxFlex="100%" fxLayoutAlign="center center">
+              <div class="details">
+                <h1>{{product.name}}</h1>
+                <!-- formatPrice - pipe used for formatting the price value -->
+                <p>{{product.price | formatPrice:'₹'}}</p>
+              </div>
+              <div class="buy" fxLayoutAlign="center center"><i class="material-icons">add_shopping_cart</i></div>
             </div>
-            <div class="buy"><i class="material-icons">add_shopping_cart</i></div>
           </div>
         </div>
-      </div>
-      <div class="info-container" fxLayoutAlign="end start">
-        <div class="info-buttons" fxLayout="column" fxLayoutAlign="space-around center">
-          <button mat-icon-button (click)="onViewProduct(product.id)">
-            <mat-icon>visibility</mat-icon>
-          </button>
-          <button mat-icon-button (click)="onEditProduct(product.id)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="onDeleteProduct(product.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
+        <div class="info-container" fxLayoutAlign="end start">
+          <div class="info-buttons" fxLayout="column" fxLayoutAlign="space-around center">
+            <button mat-icon-button>
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button (click)="onEditProduct(product.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="onDeleteProduct(product.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <div class="info-icon"><i class="material-icons">info_outline</i></div>
         </div>
-        <div class="info-icon"><i class="material-icons">info_outline</i></div>
       </div>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="!productListData || productListData?.length === 0">
+      <div class="error-img-container" fxFlex="100%" fxLayoutAlign="center center">
+        <img src="../../../../assets/img/error-img.png" alt="">
+      </div>
+    </ng-container>
   </div>
-  
+
 </div>
