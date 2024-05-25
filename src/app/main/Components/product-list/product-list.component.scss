@@ -1,13 +1,3 @@
-// .product-list-box {
-//   margin: 20px;
-//   width: 80%;
-// }
-
-:root {
-  --primary-color: #6f1757,
-    // --font-family:'Roboto', sans-serif,
-}
-
 .spacer {
   flex: 1 1 auto;
 }
@@ -22,10 +12,6 @@ body {
   width: 90%;
   margin: 3% 0;
 }
-
-// .product-list-container {
-//   width: 93%;
-// }
 
 .card-box {
   width: 250px;
@@ -97,12 +83,12 @@ body {
 
           i {
             font-size: 30px;
-            color: #6f1757;
+            color: var(--primary-color);
             transition: transform 0.5s;
           }
 
           &:hover {
-            background: #6f1757;
+            background: var(--primary-color);
           }
 
           &:hover i {
@@ -116,7 +102,6 @@ body {
   .info-container {
     z-index: 9;
     background-color: #0000006e;
-    // clip-path: circle(16% at 100% 0);
     clip-path: polygon(80% 0, 100% 0, 100% 15%, 80% 8%);
     width: 100%;
     height: 100%;
@@ -164,6 +149,7 @@ body {
 .title p {
   font-size: 38px;
   margin: 0;
+  color: var(--primary-color);
 }
 
 .title mat-icon {
@@ -171,14 +157,15 @@ body {
   font-size: $size;
   width: $size;
   height: $size;
+  color: var(--primary-color);
 }
 
 .add-product-button button {
-  background-color: #6f1757;
+  background-color: var(--primary-color);
 }
 
 .details h1 {
-  color: #6f1757;
+  color: var(--primary-color);
   font-weight: 500;
   text-transform: capitalize;
 }
@@ -197,4 +184,58 @@ body {
 .hover-element {
   transform: scale(1);
   box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+.cart-container mat-icon {
+  color: var(--primary-color);
+  $size: 40px;
+  font-size: $size;
+  width: $size;
+  height: $size;
+}
+
+/* Styles for the input box container */
+.input-container {
+  position: relative;
+  width: 300px;
+}
+
+/* Styles for the input box */
+.input-box {
+  width: calc(100% - 40px);
+  /* Adjust width accounting for search box */
+  height: 100%;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  /* Primary color */
+  border-radius: 5px;
+  font-size: 16px;
+  /* Adjust font size as needed */
+}
+
+/* Styles for the search box icon */
+.search-icon {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  /* Width of search box */
+  height: 100%;
+  color: var(--primary-color);
+}
+
+.search-icon mat-icon {
+  $size: 30px;
+  font-size: $size;
+  height: $size;
+  width: $size;
+}
+
+/* Styles for when the input box is focused */
+.input-box:focus {
+  outline: none;
+  /* Remove default focus outline */
+  border-color: var(--primary-color);
+  /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(111, 23, 87, 0.5);
+  /* Add a subtle shadow on focus */
 }

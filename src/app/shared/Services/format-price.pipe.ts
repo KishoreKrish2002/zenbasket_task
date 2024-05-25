@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
+/**
+ * Pipe for format the product price
+ */
 @Pipe({
   name: 'formatPrice'
 })

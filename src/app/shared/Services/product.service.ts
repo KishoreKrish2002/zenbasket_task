@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpRoutingService } from './http-routing.service';
 import { Observable } from 'rxjs';
-import { AllProducts, DeleteRes, OneProduct, Rows, createCallData, updateProduct } from 'src/app/models/models.module';
+import { AllProducts, DeleteRes, OneProduct, CreateCallData, UpdateProduct } from 'src/app/models/models.module';
+import { HttpClient } from '@angular/common/http';
+import { HttpRoutingService } from './http-routing.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,15 @@ export class ProductService {
    * @param httpService - Service have methoda of crud operation
    */
   constructor(
-    private httpService: HttpRoutingService
+    private httpService: HttpRoutingService,
+    private clientService: HttpClient
   ) { }
   /**
    * Funcition for create rows in db
    * @param data - variabel have paroduct details for creation
    * @returns - response of the call in observable type
    */
-  createProduct(data: createCallData): Observable<OneProduct> {
+  createProduct(data: CreateCallData): Observable<OneProduct> {
     return this.httpService.postMethod('/product', data) as Observable<OneProduct>;
   }
   /**
@@ -42,8 +44,8 @@ export class ProductService {
    * @param data - having update datas
    * @returns - response of the call in observable type
    */
-  updateProduct(id: number, data: createCallData): Observable<updateProduct> {
-    return this.httpService.putMethod(`/product`, data, { id: id }) as Observable<updateProduct>;
+  updateProduct(id: number, data: CreateCallData): Observable<UpdateProduct> {
+    return this.httpService.putMethod(`/product`, data, { id: id }) as Observable<UpdateProduct>;
   }
   /**
    * Funciton for deleting purticular rows in db

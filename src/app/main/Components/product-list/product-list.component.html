@@ -1,24 +1,27 @@
 <div fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
-  <div class="header-container" fxLayoutAlign="center baseline" fxLayout.lt-md="column" fxLayoutGap.lt-md="5%">
-    <div class="title" fxFlex="80%" fxLayoutAlign="start center" fxLayotuGap="5%">
+  <div class="header-container" fxLayoutAlign="space-between center" fxLayout.lt-md="column" fxLayoutGap.lt-md="5%">
+    <div class="title" fxFlex="50%" ngClass.lt-md="full-width" fxLayoutAlign="start center" fxLayotuGap="5%"
+      fxFlex.lt-md="100%" fxLayoutAlign.lt-md="center center">
       <mat-icon fxLayoutAlign="center center">av_timer</mat-icon>
       <p fxLayoutAlign="center center">All Proudcts</p>
     </div>
-    <div class="spacer" [ngStyle.lt-md]="{'display':'none'}"></div>
-    <div fxFlex="36%" fxLayoutAlign="center baseline" fxLayoutGap="5%" ngClass.lt-md="full-width"
-      fxLayoutAlign.lt-md="space-between baseline">
-      <div class=" search-box">
-        <mat-form-field appearance="fill">
-          <mat-label>Search Box</mat-label>
-          <input [formControl]="serachText" matInput placeholder="Search Product Name">
-          <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+    <div fxFlex="50%" fxLayoutAlign="center center" fxLayoutGap="5%" ngClass.lt-md="full-width"
+      fxLayoutAlign.lt-md="space-between center">
+      <div class="input-container">
+        <input [formControl]="searchText" matInput type="text" class="input-box" placeholder="Search...">
+        <div class="search-icon">
+          <mat-icon>search</mat-icon>
+        </div>
       </div>
       <div class="add-product-button">
         <button mat-fab extended color="primary" routerLink="add-product">
           <mat-icon>add_circle</mat-icon>
           Add Product
         </button>
+      </div>
+      <div class="cart-container" fxLayoutAlign="center center">
+        <mat-icon [matBadge]="cartCount()" matBadgeOverlap="true" fxFlex=" 100%"
+          fxLayoutAlign="center center">shopping_cart</mat-icon>
       </div>
     </div>
   </div>
@@ -35,14 +38,15 @@
                 <!-- formatPrice - pipe used for formatting the price value -->
                 <p>{{product.price | formatPrice:'₹'}}</p>
               </div>
-              <div class="buy" fxLayoutAlign="center center"><i class="material-icons">add_shopping_cart</i></div>
+              <div class="buy" (click)="addCart()" fxLayoutAlign="center center"><i
+                  class="material-icons">add_shopping_cart</i></div>
             </div>
           </div>
         </div>
         <div class="info-container" fxLayoutAlign="end start">
           <div class="info-buttons" fxLayout="column" fxLayoutAlign="space-around center">
-            <button mat-icon-button>
-              <mat-icon>visibility</mat-icon>
+            <button disabled style="cursor: normal;" mat-icon-button>
+              <mat-icon>info_outline</mat-icon>
             </button>
             <button mat-icon-button (click)="onEditProduct(product.id)">
               <mat-icon>edit</mat-icon>

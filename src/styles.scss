@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-color: #17626f;
+  --priamry-lite: #7aa7af91
+}
 
 html,
 body {
@@ -14,25 +18,63 @@ body {
   width: 100%;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
+.cart-container {
+  .mat-badge-content {
+    background-color: var(--priamry-lite) !important;
+    color: var(--primary-color) !important;
+  }
+}
+
 .search-box {
 
   .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label,
   .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
-    color: #6f1757 !important;
+    color: var(--primary-color) !important;
   }
 
   .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
-    border-bottom-color: #6f1757 !important;
+    border-bottom-color: var(--primary-color) !important;
   }
 
   mat-icon,
   mat-icon.mat-primary,
   mat-icon.mat-accent,
   mat-icon.mat-warn {
-    color: #6f1757 !important;
+    color: var(--primary-color) !important;
+  }
+
+  .mat-mdc-raised-button[disabled][disabled] {
+    background-color: var(--priamry-lite);
+    color: var(--primary-color);
   }
 }
 
 .add-product-button mat-icon {
   overflow: visible !important;
+}
+
+.snackbar-success {
+  --mat-mdc-snack-bar-button-color: #40c6ff;
+  --mdc-snackbar-container-color: #00970d;
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
+}
+
+.snackbar-error {
+  --mat-mdc-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-container-color: #ca0909;
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
+}
+
+.snackbar-warning {
+  --mat-mdc-snack-bar-button-color: #40ffb6;
+  --mdc-snackbar-container-color: #ed8f23;
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+  color: #fff !important;
 }

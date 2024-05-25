@@ -2,15 +2,18 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, mergeMap, of } from 'rxjs';
-import { OneProduct, Rows, updateProduct } from 'src/app/models/models.module';
-import { ProductService } from 'src/app/shared/Services/product.service';
+import { ApiError, OneProduct, ProductData, UpdateProduct } from 'src/app/models/models.module';
+import { CommonDialogService } from 'src/app/shared/services/common-dialog.service';
+import { CommonSnackbarService } from 'src/app/shared/services/common-snackbar.service';
+import { ProductService } from 'src/app/shared/services/product.service';
+import { Message } from 'src/app/shared/constant/message.constant';
 
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
-export class AddProductComponent {
+export class AddProductComponent extends Message {
   /**
    * Variable used to handle form values
    */
@@ -18,7 +21,7 @@ export class AddProductComponent {
   /**
    * Variable used for store product details
    */
-  productDetails!: Rows;
+  productDetails!: ProductData;
   /**
    * Subscription object vairable to add subscribed datas
    */
@@ -27,32 +30,47 @@ export class AddProductComponent {
    * 
    * @param productService - call backend apis for the required methods
    * @param route - route for get param datas
+   * @param router - to process the navigation operation
+   * @param dialogService - to perform the dialog operatoions
+   * @param snackbarService - to perform a snackbar service
    */
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private dialogService: CommonDialogService,
+    private snackbarService: CommonSnackbarService
+  ) { super() }
   /**
    * Angular life cycle hook calls first
    */
-  ngOnInit() {
+  ngOnInit(): void {
+    this.getSingleProduct();
+  }
+  /**
+   * Function used to fetch the single product detail
+   */
+  getSingleProduct(): void {
+    this.formInitilizer();
     this.subscriptonObj.add(
+      //Get the param data and process with mergemap
       this.route.params.pipe(mergeMap((res: any) => {
-        console.log("param rsL ", res);
-
-        this.formInitilizer();
         if (res && res.id) {
+          //return the single product detail based on the param id
           return this.productService.getOneProduct(res.id);
         }
-        return of(null);
+        // if not res it return observabel of null
+        return of(false);
       })).subscribe({
         next: (res: any) => {
-          this.productDetails = res.productDetails;
-          this.patchFormFieldValues();
+          // assign the subscribed value to product detial
+          if (res && res.productDetails) {
+            this.productDetails = res.productDetails;
+            this.patchFormFieldValues();
+          }
         },
-        error: (err) => {
-          console.error(err);
+        error: (err: ApiError) => {
+          this.snackbarService.openSnackBar(this.snackbarMessage.SOMETING_WENT_WRONG, this.snackbarMessage.ERROR_ACTION);
         }
       })
     );
@@ -60,7 +78,7 @@ export class AddProductComponent {
   /**
    * Initilizing form and validation
    */
-  formInitilizer() {
+  formInitilizer(): void {
     this.myGroup = new FormGroup({
       name: new FormControl(null, Validators.required),
       description: new FormControl(null),
@@ -70,7 +88,8 @@ export class AddProductComponent {
   /**
    * Patching form value and updation
    */
-  patchFormFieldValues() {
+  patchFormFieldValues(): void {
+    // Patch the value on update senario
     this.myGroup.patchValue({
       name: this.productDetails && this.productDetails.name,
       description: this.productDetails && this.productDetails.description,
@@ -80,16 +99,21 @@ export class AddProductComponent {
   /**
    * Function calls on clicking submit button
    */
-  onSubmit() {
+  onSubmit(): void {
     if (this.myGroup.valid) {
       if (this.myGroup && this.myGroup.value) {
         this.subscriptonObj.add(
+          // make the create product call to sotre the details on db
           this.productService.createProduct(this.myGroup.value).subscribe({
             next: (res: OneProduct) => {
-              if (res) this.router.navigate(['/']);
+              // if create the row successfully it navigates the all product page
+              if (res) {
+                this.snackbarService.openSnackBar(this.snackbarMessage.PRODUCT_ADDED_SUCCESSFULLY, this.snackbarMessage.SUCCESS_ACTION);
+                this.router.navigate(['/']);
+              }
             },
-            error: (err) => {
-              console.error(err);
+            error: (err: ApiError) => {
+              this.snackbarService.openSnackBar(this.snackbarMessage.SOMETING_WENT_WRONG, this.snackbarMessage.ERROR_ACTION);
             }
           })
         )
@@ -99,16 +123,21 @@ export class AddProductComponent {
   /**
    * Function for handle update event
    */
-  onUpdate() {
+  onUpdate(): void {
     if (this.myGroup.valid) {
       if (this.myGroup && this.myGroup.value) {
         this.subscriptonObj.add(
+          // make the update call to update the row
           this.productService.updateProduct(this.productDetails.id, this.myGroup.value).subscribe({
-            next: (res: updateProduct) => {
-              if (res) this.router.navigate(['/']);
+            next: (res: UpdateProduct) => {
+              // if update the row successfully it navigates the all product page
+              if (res) {
+                this.router.navigate(['/']);
+                this.snackbarService.openSnackBar(this.snackbarMessage.UPDATE_PRODUCT_SUCCESSFULLY, this.snackbarMessage.SUCCESS_ACTION);
+              }
             },
-            error: (err) => {
-              console.error(err);
+            error: (err: ApiError) => {
+              this.snackbarService.openSnackBar(this.snackbarMessage.SOMETING_WENT_WRONG, this.snackbarMessage.ERROR_ACTION);
             }
           })
         )
@@ -116,33 +145,44 @@ export class AddProductComponent {
     }
   }
   /**
-   * Function for send instruction for candeactivate route guard to allow use to go back or not
-   * @returns boolean value that make input of canDeactivate guard
+   * Function calls when click the reset function
    */
-  onDeactivate(): boolean {
-    // var flag = false;
-    // if (!this.myGroup.dirty) {
-    //   flag = true;
-    // } else {
-    //   const dialogRef = this.dialogService.openDialog('Are you sure you want to leave!');
-    //   dialogRef.afterClosed().subscribe({
-    //     next: (res: boolean) => {
-    //       flag = res;
-    //     },
-    //     error: (err: any) => {
-    //       console.error(err);
-    //     }
-    //   });
-    // }
-    // return flag
-    console.log("value on add deactivate: ", this.myGroup && this.myGroup?.dirty ? false : true);
-
-    return this.myGroup && this.myGroup?.dirty ? false : true;
+  onReset(): void {
+    if (this.productDetails) {
+      // make a getOneProduct call to fetch the single product detail
+      this.getSingleProduct();
+    } else {
+      // if it is not a update senario it reset the form
+      this.myGroup.reset();
+    }
+  }
+  /**
+   * Function call while click the cancel button
+   */
+  onCancel(): void {
+    if (this.myGroup.dirty) {
+      // Call common dialog component when the form is dirty
+      const dialogRef = this.dialogService.openDialog(this.productDetails ? this.snackbarMessage.WANT_TO_CANCEL : this.snackbarMessage.WANT_TO_GO_BACK);
+      this.subscriptonObj.add(
+        //Subscribe the returned boolean value form dialog box
+        dialogRef.afterClosed().subscribe((res: boolean) => {
+          if (res) {
+            // it navigates the all product page
+            this.router.navigate(['/']);
+          }
+        }, (err: ApiError) => {
+          this.snackbarService.openSnackBar(this.snackbarMessage.SOMETING_WENT_WRONG, this.snackbarMessage.ERROR_ACTION);
+        })
+      )
+    } else {
+      // it navigates the all product page when it not a update senario
+      this.router.navigate(['/']);
+    }
   }
   /**
    * Angular life cycle hook calls last
    */
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptonObj.unsubscribe();
   }
 

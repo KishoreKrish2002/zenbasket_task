@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
-import { DialogComponent } from './Components/dialog/dialog.component';
-import { SnackbarComponent } from './Components/snackbar/snackbar.component';
-import { ProductStyleDirective } from './Services/product-style.directive';
-import { FormatPricePipe } from './Services/format-price.pipe';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { FormatPricePipe } from './services/format-price.pipe';
+import { ProductStyleDirective } from './services/product-style.directive';
 
 
 

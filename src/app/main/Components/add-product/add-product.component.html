@@ -1,42 +1,54 @@
-<div class="form-container search-box" fxFlex="100%" fxLayoutAlign="center center">
-  <div class="form-box" fxFlex="70%" fxLayoutAlign="center center" fxLayout="column">
-    <form [formGroup]="myGroup" class="full-width" fxLayoutAlign=" center center" fxLayout="column">
-      <div class="full-width" fxLayoutAlign="center center" fxLayoutGap="5%">
-        <div fxFlex="50%" fxLayoutAlign="center center">
+<div style="width: 100%; height: 100vh;" fxFlex="100%" fxLayoutAlign="center center">
+  <mat-card class="example-card search-box" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3%"
+    [ngStyle]="{'width':'60vw'}" [ngStyle.lt-md]="{'width':'90vw'}">
+    <mat-card-header class="full-width" fxLayoutAlign="space-between center" fxLayout.lt-md="column">
+      <div fxFlex.gt-md="50%" fxLayoutAlign="start center" fxLayoutAlign.lt-md="center center">
+        <mat-card-title>{{productDetails ? 'Edit' : 'Add'}} Your Product Here</mat-card-title>
+      </div>
+      <mat-card-actions class="button-container" fxFlex.gt-md="50%" fxLayoutAlign="end center" fxLayoutGap="5%"
+        fxLayoutAlign="center center">
+        <div class="back-button">
+          <button (click)="onCancel()" mat-raised-button>{{productDetails
+            ?
+            'Cancel': 'Back'}}</button>
+        </div>
+        <div class="reset-button">
+          <button mat-raised-button (click)="onReset()">Reset</button>
+        </div>
+        <div class="submit-button">
+          <button *ngIf="!productDetails" [disabled]="myGroup.invalid" mat-raised-button
+            (click)="onSubmit()">Submit</button>
+          <button *ngIf="productDetails" [disabled]="myGroup.invalid" mat-raised-button
+            (click)="onUpdate()">Update</button>
+        </div>
+      </mat-card-actions>
+    </mat-card-header>
+    <mat-divider class="full-width"></mat-divider>
+    <mat-card-content class="form-content">
+      <form [formGroup]="myGroup" fxLayoutAlign="center center" fxLayout="column">
+        <div class="full-width" fxLayoutAlign="center center" fxLayoutGap="5%">
+          <div fxFlex="50%" fxLayoutAlign="center center">
+            <mat-form-field appearance="fill" fxFlex="100%">
+              <mat-label>Product Name</mat-label>
+              <input formControlName="name" matInput placeholder="Eg.Naveen">
+              <mat-error *ngIf="myGroup?.get('name')?.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50%" fxLayoutAlign="center center">
+            <mat-form-field appearance="fill" fxFlex="100%">
+              <mat-label>Price</mat-label>
+              <input formControlName="price" type="number" matInput placeholder="Eg.45.00">
+              <mat-error *ngIf="myGroup?.get('price')?.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="full-width" fxLayoutAlign="center center">
           <mat-form-field appearance="fill" fxFlex="100%">
-            <mat-label>Product Name</mat-label>
-            <input formControlName="name" matInput placeholder="Eg.Naveen">
-            <mat-error *ngIf="myGroup?.get('name')?.hasError('required')">This field is required</mat-error>
+            <mat-label>Description</mat-label>
+            <textarea formControlName="description" matInput placeholder="Eg.something special"></textarea>
           </mat-form-field>
         </div>
-        <div fxFlex="50%" fxLayoutAlign="center center">
-          <mat-form-field appearance="fill" fxFlex="100%">
-            <mat-label>Price</mat-label>
-            <input formControlName="price" type="number" matInput placeholder="Eg.45.00">
-            <mat-error *ngIf="myGroup?.get('price')?.hasError('required')">This field is required</mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="full-width" fxLayoutAlign="center center">
-        <mat-form-field appearance="fill" fxFlex="100%">
-          <mat-label>Description</mat-label>
-          <textarea formControlName="description" matInput placeholder="Eg.something special"></textarea>
-        </mat-form-field>
-      </div>
-    </form>
-    <div class="button-container full-width" fxLayoutAlign="center center" fxLayoutGap="5%">
-      <div class="back-button">
-        <button mat-raised-button routerLink="/">Back</button>
-      </div>
-      <div class="reset-button">
-        <button mat-raised-button (click)="myGroup.reset()">Reset</button>
-      </div>
-      <div class="submit-button">
-        <button *ngIf="!productDetails" [disabled]="myGroup.invalid" mat-raised-button
-          (click)="onSubmit()">Submit</button>
-        <button *ngIf="productDetails" [disabled]="myGroup.invalid" mat-raised-button
-          (click)="onUpdate()">Update</button>
-      </div>
-    </div>
-  </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -8,7 +8,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogComponent {
   /**
-   * 
    * @param data - data that arrives for a service that show on the dialog
    */
   constructor(

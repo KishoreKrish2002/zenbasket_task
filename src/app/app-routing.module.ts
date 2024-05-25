@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductListComponent } from './main/Components/product-list/product-list.component';
-import { AddProductComponent } from './main/Components/add-product/add-product.component';
-import { canDeactivateGuard } from './shared/Services/can-deactivate.guard';
+import { ProductListComponent } from './main/components/product-list/product-list.component';
+import { AddProductComponent } from './main/components/add-product/add-product.component';
 
 const routes: Routes = [
   { path: '', component: ProductListComponent },
